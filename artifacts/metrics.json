@@ -1,0 +1,293 @@
+{
+  "dataset": "data/emails_labeled_SYNTHETIC.csv",
+  "dataset_type": "synthetic; metrics measure performance on generated patterns, not real-world threat-detection validity",
+  "rows_used": 12000,
+  "class_counts": {
+    "normal": 6000,
+    "suspicious": 6000
+  },
+  "original_split_diagnostic_only": {
+    "test": {
+      "rows": 1990,
+      "class_counts": {
+        "0": 1039,
+        "1": 951
+      }
+    },
+    "train": {
+      "rows": 7997,
+      "class_counts": {
+        "0": 3951,
+        "1": 4046
+      }
+    },
+    "validation": {
+      "rows": 2013,
+      "class_counts": {
+        "0": 1010,
+        "1": 1003
+      }
+    }
+  },
+  "grouping": {
+    "method": "normalized email body; empty bodies grouped by normalized subject",
+    "unique_groups": 9850,
+    "duplicate_body_rows_beyond_unique": 2150,
+    "groups_with_conflicting_labels": 0,
+    "group_overlap_between_train_validation_test": false
+  },
+  "development_split": {
+    "train": {
+      "rows": 8476,
+      "class_counts": {
+        "normal": 4200,
+        "suspicious": 4276
+      }
+    },
+    "validation": {
+      "rows": 1725,
+      "class_counts": {
+        "normal": 887,
+        "suspicious": 838
+      }
+    },
+    "test": {
+      "rows": 1799,
+      "class_counts": {
+        "normal": 913,
+        "suspicious": 886
+      }
+    }
+  },
+  "leakage_controls": [
+    "Group split keeps normalized repeated email bodies within one partition.",
+    "Temporal model excludes external_recipient and personal_email_recipient because these nearly perfectly encode labels in this synthetic file.",
+    "Non-temporal model uses email-body TF-IDF and linguistic features only; subject and label/scenario/recipient metadata excluded."
+  ],
+  "warnings": [
+    "Synthetic data: metrics are not evidence of real-world performance.",
+    "Check template and phrase leakage before reporting results.",
+    "Validation is held out; the final test set is used once for reported metrics."
+  ],
+  "temporal_supervised": {
+    "validation": {
+      "precision": 0.7976047904191617,
+      "recall": 0.7947494033412887,
+      "f1": 0.7961745367603108,
+      "average_precision_pr_auc": 0.8886742917925667,
+      "confusion_matrix_labels_0_1": [
+        [
+          718,
+          169
+        ],
+        [
+          172,
+          666
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 0.8067415730337079,
+          "recall": 0.8094701240135288,
+          "f1-score": 0.8081035453010692,
+          "support": 887.0
+        },
+        "1": {
+          "precision": 0.7976047904191617,
+          "recall": 0.7947494033412887,
+          "f1-score": 0.7961745367603108,
+          "support": 838.0
+        },
+        "accuracy": 0.8023188405797101,
+        "macro avg": {
+          "precision": 0.8021731817264348,
+          "recall": 0.8021097636774088,
+          "f1-score": 0.80213904103069,
+          "support": 1725.0
+        },
+        "weighted avg": {
+          "precision": 0.8023029505229892,
+          "recall": 0.8023188405797101,
+          "f1-score": 0.802308467528805,
+          "support": 1725.0
+        }
+      },
+      "roc_auc": 0.8942346758939118
+    },
+    "test": {
+      "precision": 0.7936145952109465,
+      "recall": 0.7855530474040632,
+      "f1": 0.789563244469654,
+      "average_precision_pr_auc": 0.8856160384138926,
+      "confusion_matrix_labels_0_1": [
+        [
+          732,
+          181
+        ],
+        [
+          190,
+          696
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 0.7939262472885033,
+          "recall": 0.8017524644030668,
+          "f1-score": 0.7978201634877384,
+          "support": 913.0
+        },
+        "1": {
+          "precision": 0.7936145952109465,
+          "recall": 0.7855530474040632,
+          "f1-score": 0.789563244469654,
+          "support": 886.0
+        },
+        "accuracy": 0.7937743190661478,
+        "macro avg": {
+          "precision": 0.7937704212497249,
+          "recall": 0.793652755903565,
+          "f1-score": 0.7936917039786962,
+          "support": 1799.0
+        },
+        "weighted avg": {
+          "precision": 0.7937727599395785,
+          "recall": 0.7937743190661478,
+          "f1-score": 0.7937536652942849,
+          "support": 1799.0
+        }
+      },
+      "roc_auc": 0.8860008060149483
+    },
+    "features": [
+      "hour",
+      "day_of_week_num",
+      "is_weekend",
+      "is_after_hours",
+      "recipient_count",
+      "attachment_count",
+      "size",
+      "word_count",
+      "char_count",
+      "sentence_count"
+    ]
+  },
+  "temporal_anomaly_detector": {
+    "normal_train_rows": 4200,
+    "test_mean_anomaly_score_normal": 0.009929882277322256,
+    "test_mean_anomaly_score_suspicious": 0.058228724296607866,
+    "note": "Uncalibrated anomaly ranking, not a probability."
+  },
+  "non_temporal_supervised": {
+    "validation": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "average_precision_pr_auc": 1.0,
+      "confusion_matrix_labels_0_1": [
+        [
+          887,
+          0
+        ],
+        [
+          0,
+          838
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 887.0
+        },
+        "1": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 838.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1725.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1725.0
+        }
+      },
+      "roc_auc": 1.0
+    },
+    "test": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "average_precision_pr_auc": 1.0,
+      "confusion_matrix_labels_0_1": [
+        [
+          913,
+          0
+        ],
+        [
+          0,
+          886
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 913.0
+        },
+        "1": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 886.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1799.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 1799.0
+        }
+      },
+      "roc_auc": 1.0
+    },
+    "features": {
+      "text": "email body only: word/character TF-IDF",
+      "stylometric_numeric": [
+        "word_count_calc",
+        "char_count_calc",
+        "sentence_count_calc",
+        "avg_word_len",
+        "type_token_ratio",
+        "uppercase_ratio",
+        "punctuation_count",
+        "exclamation_count",
+        "question_count",
+        "comma_count",
+        "newline_count",
+        "avg_sentence_chars"
+      ]
+    }
+  },
+  "non_temporal_anomaly_detector": {
+    "normal_train_rows": 4200,
+    "test_mean_anomaly_score_normal": -0.025056941571077625,
+    "test_mean_anomaly_score_suspicious": 0.009050348315276268,
+    "note": "Uncalibrated anomaly ranking, not a probability."
+  }
+}

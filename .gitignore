@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+*.log
+
+# Local backups and debugging
+*.bak
+app_before_*.py
+app_integrated_fixed_stylometry.py
+debug_stylometry.py
+=
+app.min.js.map

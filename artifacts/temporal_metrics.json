@@ -1,0 +1,152 @@
+{
+  "dataset": {
+    "train_records": 7030,
+    "validation_records": 2800,
+    "test_records": 2170,
+    "train_employees": 144,
+    "validation_employees": 48,
+    "test_employees": 48,
+    "employee_disjoint": true,
+    "class_counts": {
+      "train": {
+        "normal": 3515,
+        "suspicious": 3515
+      },
+      "validation": {
+        "normal": 1400,
+        "suspicious": 1400
+      },
+      "test": {
+        "normal": 1085,
+        "suspicious": 1085
+      }
+    },
+    "synthetic_data_warning": "All records are synthetic and classes are artificially balanced. Metrics do not establish real-world insider-threat performance."
+  },
+  "feature_columns": [
+    "hour",
+    "day_of_week_num",
+    "is_weekend",
+    "is_after_hours",
+    "recipient_count",
+    "external_recipient",
+    "attachment_count",
+    "size",
+    "word_count",
+    "char_count",
+    "sentence_count",
+    "activity_frequency_1h",
+    "activity_frequency_24h",
+    "unique_recipients_24h",
+    "off_hours_events_7d",
+    "external_recipient_events_7d"
+  ],
+  "supervised": {
+    "model": "RandomForestClassifier",
+    "threshold_selection": "maximum F1 on validation set",
+    "validation": {
+      "threshold": 0.48355177098443336,
+      "accuracy": 0.8317857142857142,
+      "precision": 0.8273431994362227,
+      "recall": 0.8385714285714285,
+      "f1_score": 0.8329194749911316,
+      "confusion_matrix": {
+        "true_normal_predicted_normal": 1155,
+        "true_normal_predicted_suspicious": 245,
+        "true_suspicious_predicted_normal": 226,
+        "true_suspicious_predicted_suspicious": 1174
+      },
+      "classification_report": {
+        "normal": {
+          "precision": 0.836350470673425,
+          "recall": 0.825,
+          "f1-score": 0.8306364617044228,
+          "support": 1400.0
+        },
+        "suspicious": {
+          "precision": 0.8273431994362227,
+          "recall": 0.8385714285714285,
+          "f1-score": 0.8329194749911316,
+          "support": 1400.0
+        },
+        "accuracy": 0.8317857142857142,
+        "macro avg": {
+          "precision": 0.8318468350548238,
+          "recall": 0.8317857142857142,
+          "f1-score": 0.8317779683477773,
+          "support": 2800.0
+        },
+        "weighted avg": {
+          "precision": 0.8318468350548239,
+          "recall": 0.8317857142857142,
+          "f1-score": 0.8317779683477771,
+          "support": 2800.0
+        }
+      }
+    },
+    "test": {
+      "threshold": 0.48355177098443336,
+      "accuracy": 0.8110599078341014,
+      "precision": 0.8351539225422046,
+      "recall": 0.7751152073732719,
+      "f1_score": 0.8040152963671128,
+      "confusion_matrix": {
+        "true_normal_predicted_normal": 919,
+        "true_normal_predicted_suspicious": 166,
+        "true_suspicious_predicted_normal": 244,
+        "true_suspicious_predicted_suspicious": 841
+      },
+      "classification_report": {
+        "normal": {
+          "precision": 0.7901977644024075,
+          "recall": 0.8470046082949308,
+          "f1-score": 0.8176156583629893,
+          "support": 1085.0
+        },
+        "suspicious": {
+          "precision": 0.8351539225422046,
+          "recall": 0.7751152073732719,
+          "f1-score": 0.8040152963671128,
+          "support": 1085.0
+        },
+        "accuracy": 0.8110599078341014,
+        "macro avg": {
+          "precision": 0.812675843472306,
+          "recall": 0.8110599078341014,
+          "f1-score": 0.8108154773650511,
+          "support": 2170.0
+        },
+        "weighted avg": {
+          "precision": 0.812675843472306,
+          "recall": 0.8110599078341014,
+          "f1-score": 0.8108154773650511,
+          "support": 2170.0
+        }
+      },
+      "roc_auc": 0.8897738325298903,
+      "pr_auc": 0.8973777033611069
+    }
+  },
+  "anomaly_detection": {
+    "model": "IsolationForest",
+    "fit_records": 3515,
+    "threshold_rule": "95th percentile of anomaly scores on normal validation records (targeting approximately 5% validation false-positive rate)",
+    "anomaly_score_definition": "-IsolationForest.score_samples; higher is more anomalous",
+    "threshold": 0.5371005054881756,
+    "test_records_flagged": 331,
+    "test_flagged_fraction": 0.15253456221198156,
+    "precision": 0.8398791540785498,
+    "recall": 0.25622119815668204,
+    "f1_score": 0.3926553672316384,
+    "roc_auc": 0.7691656225445433,
+    "pr_auc": 0.7429826488205804,
+    "confusion_matrix": {
+      "true_normal_predicted_normal": 1032,
+      "true_normal_predicted_suspicious": 53,
+      "true_suspicious_predicted_normal": 807,
+      "true_suspicious_predicted_suspicious": 278
+    },
+    "normal_test_mean_anomaly_score": 0.43720297811290587,
+    "suspicious_test_mean_anomaly_score": 0.49275134757150074
+  }
+}

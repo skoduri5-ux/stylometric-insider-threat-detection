@@ -1,0 +1,796 @@
+{
+  "seed": 42,
+  "rows": 12000,
+  "class_counts": {
+    "normal": 6000,
+    "suspicious": 6000
+  },
+  "class_percent": {
+    "normal": 50.0,
+    "suspicious": 50.0
+  },
+  "unique_employees": 240,
+  "class_balance_warning": "The 50/50 class balance is ARTIFICIAL. Real insider-threat prevalence is far below 1%; use PR-AUC/recall at low FPR and re-weight/re-sample for realistic prevalence before drawing conclusions.",
+  "splits": {
+    "train": {
+      "rows": 7030,
+      "employees": 144,
+      "counts": {
+        "normal": 3515,
+        "suspicious": 3515
+      },
+      "percent": {
+        "normal": 50.0,
+        "suspicious": 50.0
+      }
+    },
+    "validation": {
+      "rows": 2800,
+      "employees": 48,
+      "counts": {
+        "normal": 1400,
+        "suspicious": 1400
+      },
+      "percent": {
+        "normal": 50.0,
+        "suspicious": 50.0
+      }
+    },
+    "test": {
+      "rows": 2170,
+      "employees": 48,
+      "counts": {
+        "normal": 1085,
+        "suspicious": 1085
+      },
+      "percent": {
+        "normal": 50.0,
+        "suspicious": 50.0
+      }
+    }
+  },
+  "scenario_by_split": {
+    "train": {
+      "normal_routine": 3515,
+      "combined_behavior": 825,
+      "unusual_hours": 640,
+      "unusual_volume": 630,
+      "unusual_external_activity": 574,
+      "unusual_attachment_activity": 440,
+      "unusual_recipients": 406
+    },
+    "validation": {
+      "normal_routine": 1400,
+      "combined_behavior": 341,
+      "unusual_volume": 286,
+      "unusual_hours": 240,
+      "unusual_external_activity": 196,
+      "unusual_recipients": 172,
+      "unusual_attachment_activity": 165
+    },
+    "test": {
+      "normal_routine": 1085,
+      "unusual_external_activity": 214,
+      "unusual_hours": 208,
+      "unusual_attachment_activity": 203,
+      "combined_behavior": 173,
+      "unusual_volume": 151,
+      "unusual_recipients": 136
+    }
+  },
+  "scenario_counts": {
+    "normal_routine": 6000,
+    "combined_behavior": 1339,
+    "unusual_hours": 1088,
+    "unusual_volume": 1067,
+    "unusual_external_activity": 984,
+    "unusual_attachment_activity": 808,
+    "unusual_recipients": 714
+  },
+  "validation": {
+    "1_required_columns_exact_order": {
+      "passed": true
+    },
+    "2_no_missing_values": {
+      "passed": true,
+      "detail": {}
+    },
+    "2_valid_timestamps": {
+      "passed": true
+    },
+    "2_labels_valid": {
+      "passed": true
+    },
+    "3_unique_event_ids": {
+      "passed": true
+    },
+    "4_no_exact_duplicate_rows": {
+      "passed": true
+    },
+    "5_datetime_consistency": {
+      "passed": true
+    },
+    "7_numeric_ranges_plausible": {
+      "passed": true
+    },
+    "8_variation_in_both_classes": {
+      "passed": true,
+      "detail": {
+        "normal": {
+          "distinct_hours": 24,
+          "weekdays_covered": 7,
+          "weekend_share": 0.021,
+          "departments": 8,
+          "freq_1h_quantiles": [
+            0.0,
+            1.0,
+            6.0,
+            11.0
+          ]
+        },
+        "suspicious": {
+          "distinct_hours": 24,
+          "weekdays_covered": 7,
+          "weekend_share": 0.144,
+          "departments": 8,
+          "freq_1h_quantiles": [
+            0.0,
+            3.0,
+            10.0,
+            18.0
+          ]
+        }
+      }
+    },
+    "9_no_single_feature_reveals_label": {
+      "passed": true,
+      "detail": {
+        "single_feature": {
+          "hour": {
+            "best_threshold_accuracy": 0.6001,
+            "auc": 0.5933
+          },
+          "is_weekend": {
+            "best_threshold_accuracy": 0.5615,
+            "auc": 0.5615
+          },
+          "is_after_hours": {
+            "best_threshold_accuracy": 0.5985,
+            "auc": 0.5985
+          },
+          "recipient_count": {
+            "best_threshold_accuracy": 0.6022,
+            "auc": 0.6291
+          },
+          "external_recipient": {
+            "best_threshold_accuracy": 0.5473,
+            "auc": 0.5473
+          },
+          "attachment_count": {
+            "best_threshold_accuracy": 0.5653,
+            "auc": 0.5789
+          },
+          "size": {
+            "best_threshold_accuracy": 0.5643,
+            "auc": 0.5712
+          },
+          "word_count": {
+            "best_threshold_accuracy": 0.5381,
+            "auc": 0.4465
+          },
+          "char_count": {
+            "best_threshold_accuracy": 0.5377,
+            "auc": 0.4459
+          },
+          "sentence_count": {
+            "best_threshold_accuracy": 0.5374,
+            "auc": 0.4525
+          },
+          "activity_frequency_1h": {
+            "best_threshold_accuracy": 0.6185,
+            "auc": 0.6604
+          },
+          "activity_frequency_24h": {
+            "best_threshold_accuracy": 0.5214,
+            "auc": 0.5168
+          },
+          "unique_recipients_24h": {
+            "best_threshold_accuracy": 0.5715,
+            "auc": 0.596
+          },
+          "off_hours_events_7d": {
+            "best_threshold_accuracy": 0.5105,
+            "auc": 0.5076
+          },
+          "external_recipient_events_7d": {
+            "best_threshold_accuracy": 0.5569,
+            "auc": 0.4403
+          }
+        },
+        "label_pure_categories": []
+      }
+    },
+    "10_no_employee_overlap_between_splits": {
+      "passed": true,
+      "detail": {
+        "train": 144,
+        "validation": 48,
+        "test": 48
+      }
+    },
+    "splits_cover_full_dataset": {
+      "passed": true
+    },
+    "both_classes_in_every_split": {
+      "passed": true
+    },
+    "threat_scenario_consistent": {
+      "passed": true
+    },
+    "duplicate_feature_rows_and_conflicts": {
+      "passed": true,
+      "detail": {
+        "exact_feature_duplicates_excluding_id_time_label": 0,
+        "opposing_label_collisions": 0,
+        "near_duplicate_groups_with_opposing_labels_(coarse_key:_no_username/body_metadata,_size_in_10KB_bins)": 0
+      }
+    }
+  },
+  "validation_failures": [],
+  "rolling_feature_checks": {
+    "rows_tested": 600,
+    "brute_force_matches": 600,
+    "future_truncation_matches": 600
+  },
+  "collision_resampling": {
+    "normal_rows_replaced_due_to_feature_collisions": 0
+  },
+  "baseline_sanity_check": {
+    "note": "sanity check on SYNTHETIC data only; not evidence of real-world performance",
+    "random_forest_unseen_employees": {
+      "roc_auc": 0.8898,
+      "pr_auc": 0.8974,
+      "f1_at_0.5": 0.8023
+    },
+    "isolation_forest_unsupervised": {
+      "roc_auc": 0.7213,
+      "pr_auc": 0.687
+    }
+  },
+  "crosstabs_label": {
+    "hour": {
+      "0": {
+        "normal": 9,
+        "suspicious": 163
+      },
+      "1": {
+        "normal": 10,
+        "suspicious": 118
+      },
+      "2": {
+        "normal": 7,
+        "suspicious": 86
+      },
+      "3": {
+        "normal": 7,
+        "suspicious": 87
+      },
+      "4": {
+        "normal": 9,
+        "suspicious": 93
+      },
+      "5": {
+        "normal": 77,
+        "suspicious": 49
+      },
+      "6": {
+        "normal": 105,
+        "suspicious": 16
+      },
+      "7": {
+        "normal": 197,
+        "suspicious": 2
+      },
+      "8": {
+        "normal": 141,
+        "suspicious": 18
+      },
+      "9": {
+        "normal": 241,
+        "suspicious": 176
+      },
+      "10": {
+        "normal": 366,
+        "suspicious": 345
+      },
+      "11": {
+        "normal": 571,
+        "suspicious": 326
+      },
+      "12": {
+        "normal": 710,
+        "suspicious": 365
+      },
+      "13": {
+        "normal": 821,
+        "suspicious": 412
+      },
+      "14": {
+        "normal": 649,
+        "suspicious": 463
+      },
+      "15": {
+        "normal": 453,
+        "suspicious": 475
+      },
+      "16": {
+        "normal": 240,
+        "suspicious": 396
+      },
+      "17": {
+        "normal": 172,
+        "suspicious": 206
+      },
+      "18": {
+        "normal": 344,
+        "suspicious": 261
+      },
+      "19": {
+        "normal": 199,
+        "suspicious": 455
+      },
+      "20": {
+        "normal": 180,
+        "suspicious": 479
+      },
+      "21": {
+        "normal": 197,
+        "suspicious": 435
+      },
+      "22": {
+        "normal": 189,
+        "suspicious": 330
+      },
+      "23": {
+        "normal": 106,
+        "suspicious": 244
+      }
+    },
+    "day_of_week": {
+      "Friday": {
+        "normal": 1069,
+        "suspicious": 1059
+      },
+      "Monday": {
+        "normal": 1207,
+        "suspicious": 1041
+      },
+      "Saturday": {
+        "normal": 48,
+        "suspicious": 455
+      },
+      "Sunday": {
+        "normal": 78,
+        "suspicious": 409
+      },
+      "Thursday": {
+        "normal": 1244,
+        "suspicious": 1108
+      },
+      "Tuesday": {
+        "normal": 1191,
+        "suspicious": 1020
+      },
+      "Wednesday": {
+        "normal": 1163,
+        "suspicious": 908
+      }
+    },
+    "is_weekend": {
+      "0": {
+        "normal": 5874,
+        "suspicious": 5136
+      },
+      "1": {
+        "normal": 126,
+        "suspicious": 864
+      }
+    },
+    "is_after_hours": {
+      "0": {
+        "normal": 4364,
+        "suspicious": 3182
+      },
+      "1": {
+        "normal": 1636,
+        "suspicious": 2818
+      }
+    },
+    "external_recipient": {
+      "0": {
+        "normal": 4026,
+        "suspicious": 3459
+      },
+      "1": {
+        "normal": 1974,
+        "suspicious": 2541
+      }
+    },
+    "department": {
+      "Engineering": {
+        "normal": 664,
+        "suspicious": 1194
+      },
+      "Finance": {
+        "normal": 535,
+        "suspicious": 552
+      },
+      "HR": {
+        "normal": 1073,
+        "suspicious": 749
+      },
+      "IT": {
+        "normal": 562,
+        "suspicious": 786
+      },
+      "Legal": {
+        "normal": 406,
+        "suspicious": 491
+      },
+      "Marketing": {
+        "normal": 854,
+        "suspicious": 608
+      },
+      "Operations": {
+        "normal": 422,
+        "suspicious": 524
+      },
+      "Sales": {
+        "normal": 1484,
+        "suspicious": 1096
+      }
+    }
+  },
+  "descriptive_statistics_by_label": {
+    "normal": {
+      "hour": {
+        "mean": 13.64,
+        "std": 4.16,
+        "min": 0.0,
+        "25%": 11.0,
+        "50%": 13.0,
+        "75%": 16.0,
+        "max": 23.0
+      },
+      "is_weekend": {
+        "mean": 0.02,
+        "std": 0.14,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 1.0
+      },
+      "is_after_hours": {
+        "mean": 0.27,
+        "std": 0.45,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 1.0,
+        "max": 1.0
+      },
+      "recipient_count": {
+        "mean": 2.57,
+        "std": 4.47,
+        "min": 1.0,
+        "25%": 1.0,
+        "50%": 1.0,
+        "75%": 2.0,
+        "max": 40.0
+      },
+      "external_recipient": {
+        "mean": 0.33,
+        "std": 0.47,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 1.0,
+        "max": 1.0
+      },
+      "attachment_count": {
+        "mean": 0.6,
+        "std": 0.91,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 1.0,
+        "max": 6.0
+      },
+      "size": {
+        "mean": 765946.48,
+        "std": 2374456.13,
+        "min": 1606.0,
+        "25%": 3358.75,
+        "50%": 4590.0,
+        "75%": 542178.75,
+        "max": 48595332.0
+      },
+      "word_count": {
+        "mean": 116.82,
+        "std": 106.46,
+        "min": 6.0,
+        "25%": 52.0,
+        "50%": 86.0,
+        "75%": 144.25,
+        "max": 1466.0
+      },
+      "char_count": {
+        "mean": 700.04,
+        "std": 634.44,
+        "min": 48.0,
+        "25%": 312.75,
+        "50%": 515.0,
+        "75%": 867.0,
+        "max": 8855.0
+      },
+      "sentence_count": {
+        "mean": 7.65,
+        "std": 7.5,
+        "min": 1.0,
+        "25%": 3.0,
+        "50%": 5.0,
+        "75%": 9.0,
+        "max": 98.0
+      },
+      "activity_frequency_1h": {
+        "mean": 2.27,
+        "std": 2.66,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 1.0,
+        "75%": 3.0,
+        "max": 22.0
+      },
+      "activity_frequency_24h": {
+        "mean": 17.21,
+        "std": 11.68,
+        "min": 0.0,
+        "25%": 9.0,
+        "50%": 15.0,
+        "75%": 22.0,
+        "max": 107.0
+      },
+      "unique_recipients_24h": {
+        "mean": 20.1,
+        "std": 15.35,
+        "min": 0.0,
+        "25%": 10.0,
+        "50%": 17.0,
+        "75%": 26.0,
+        "max": 189.0
+      },
+      "off_hours_events_7d": {
+        "mean": 15.21,
+        "std": 11.99,
+        "min": 0.0,
+        "25%": 7.0,
+        "50%": 12.0,
+        "75%": 20.0,
+        "max": 94.0
+      },
+      "external_recipient_events_7d": {
+        "mean": 25.86,
+        "std": 23.76,
+        "min": 0.0,
+        "25%": 7.0,
+        "50%": 18.0,
+        "75%": 39.0,
+        "max": 130.0
+      }
+    },
+    "suspicious": {
+      "hour": {
+        "mean": 14.69,
+        "std": 5.78,
+        "min": 0.0,
+        "25%": 12.0,
+        "50%": 15.0,
+        "75%": 19.0,
+        "max": 23.0
+      },
+      "is_weekend": {
+        "mean": 0.14,
+        "std": 0.35,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 1.0
+      },
+      "is_after_hours": {
+        "mean": 0.47,
+        "std": 0.5,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 1.0,
+        "max": 1.0
+      },
+      "recipient_count": {
+        "mean": 4.62,
+        "std": 6.42,
+        "min": 1.0,
+        "25%": 1.0,
+        "50%": 2.0,
+        "75%": 4.0,
+        "max": 42.0
+      },
+      "external_recipient": {
+        "mean": 0.42,
+        "std": 0.49,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 1.0,
+        "max": 1.0
+      },
+      "attachment_count": {
+        "mean": 1.17,
+        "std": 1.68,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 2.0,
+        "max": 11.0
+      },
+      "size": {
+        "mean": 2643265.38,
+        "std": 7887643.35,
+        "min": 1579.0,
+        "25%": 3547.75,
+        "50%": 5414.5,
+        "75%": 1635714.75,
+        "max": 100000000.0
+      },
+      "word_count": {
+        "mean": 101.78,
+        "std": 94.58,
+        "min": 4.0,
+        "25%": 43.0,
+        "50%": 75.0,
+        "75%": 126.0,
+        "max": 1252.0
+      },
+      "char_count": {
+        "mean": 608.29,
+        "std": 556.41,
+        "min": 26.0,
+        "25%": 264.0,
+        "50%": 452.5,
+        "75%": 754.0,
+        "max": 7838.0
+      },
+      "sentence_count": {
+        "mean": 6.71,
+        "std": 6.6,
+        "min": 1.0,
+        "25%": 3.0,
+        "50%": 5.0,
+        "75%": 8.0,
+        "max": 80.0
+      },
+      "activity_frequency_1h": {
+        "mean": 4.21,
+        "std": 4.21,
+        "min": 0.0,
+        "25%": 1.0,
+        "50%": 3.0,
+        "75%": 6.0,
+        "max": 31.0
+      },
+      "activity_frequency_24h": {
+        "mean": 17.16,
+        "std": 9.82,
+        "min": 0.0,
+        "25%": 10.0,
+        "50%": 16.0,
+        "75%": 23.0,
+        "max": 77.0
+      },
+      "unique_recipients_24h": {
+        "mean": 28.62,
+        "std": 25.11,
+        "min": 0.0,
+        "25%": 13.0,
+        "50%": 21.0,
+        "75%": 36.0,
+        "max": 183.0
+      },
+      "off_hours_events_7d": {
+        "mean": 15.22,
+        "std": 11.06,
+        "min": 0.0,
+        "25%": 7.0,
+        "50%": 12.0,
+        "75%": 21.0,
+        "max": 66.0
+      },
+      "external_recipient_events_7d": {
+        "mean": 21.75,
+        "std": 23.2,
+        "min": 0.0,
+        "25%": 5.0,
+        "50%": 13.0,
+        "75%": 30.0,
+        "max": 143.0
+      }
+    }
+  },
+  "model_inputs": {
+    "predictors": [
+      "hour",
+      "day_of_week_num",
+      "is_weekend",
+      "is_after_hours",
+      "recipient_count",
+      "external_recipient",
+      "attachment_count",
+      "size",
+      "word_count",
+      "char_count",
+      "sentence_count",
+      "activity_frequency_1h",
+      "activity_frequency_24h",
+      "unique_recipients_24h",
+      "off_hours_events_7d",
+      "external_recipient_events_7d"
+    ],
+    "never_predictors": [
+      "event_id",
+      "timestamp",
+      "date",
+      "username",
+      "label",
+      "threat_scenario",
+      "split",
+      "department",
+      "role (optional context only)"
+    ]
+  },
+  "feature_definitions": {
+    "event_id": "random unique id (no label information)",
+    "timestamp": "ISO 8601 send time",
+    "date": "YYYY-MM-DD",
+    "hour": "0-23",
+    "day_of_week": "Monday..Sunday",
+    "is_weekend": "1 on Sat/Sun",
+    "is_after_hours": "1 if hour<8 or hour>=18",
+    "username": "synthetic employee id (identifier, not a predictor)",
+    "department": "employee department (context)",
+    "role": "employee role (context)",
+    "recipient_count": "distinct To/CC/BCC recipients",
+    "external_recipient": "1 if any recipient external",
+    "attachment_count": "attachments in the email",
+    "size": "email size in bytes",
+    "word_count": "body words (metadata only)",
+    "char_count": "body characters (metadata only)",
+    "sentence_count": "body sentences (metadata only)",
+    "activity_frequency_1h": "employee's emails in [t-1h, t), strictly earlier events",
+    "activity_frequency_24h": "employee's emails in [t-24h, t)",
+    "unique_recipients_24h": "distinct recipients across those 24h emails",
+    "off_hours_events_7d": "after-hours emails in [t-7d, t)",
+    "external_recipient_events_7d": "emails with external recipients in [t-7d, t)",
+    "label": "normal | suspicious (target)",
+    "threat_scenario": "evaluation/analysis only - never a predictor",
+    "split": "train | validation | test (employee-disjoint)"
+  },
+  "assumptions_and_limitations": [
+    "All data is synthetic. Suspicious behavior is defined by the six rules in this script (hours, volume, recipients, external, attachments, combined) and mirrors my assumptions, not observed attacks.",
+    "Rolling features are computed on each employee's full simulated stream (including normal events not kept in the final CSV) using only earlier events, so counts reflect true activity, not the sampled subset.",
+    "Normal rows are a weighted sample that over-represents legitimate hard cases (after-hours, weekend, external, large attachments, broadcasts, bursts) so no single feature is a shortcut.",
+    "Suspicious episode strength is randomized, so some suspicious events are only mildly abnormal and overlap normal behavior; this is intended.",
+    "Every employee has both classes, so identity cannot reveal the label; splits are by employee for unseen-employee evaluation.",
+    "Good scores here show the pipeline works, not that the model would detect real insiders."
+  ]
+}
